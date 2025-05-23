@@ -1,3 +1,5 @@
+# app.py
+
 import streamlit as st
 from supabase import create_client, Client
 
@@ -16,18 +18,8 @@ supabase: Client = init_supabase_client()
 
 st.title("Supabase Table Data")
 
-def get_tables():
-    # This queries the information_schema to get public table names
-    # Requires appropriate RLS setup to allow querying information_schema or tables
-    # Alternatively, you might need to manually list tables if RLS is restrictive.
-    try:
-        response = supabase.from_('information_schema.tables').select('table_name').eq('table_schema', 'public').execute()
-        tables = [item['table_name'] for item in response.data]
-        return tables
-    except Exception as e:
-        st.error(f"Error fetching table names: {e}")
-        return []
-
+# Use the provided table names directly instead of querying information_schema
+tables = ["Partidos", "Tenistas"]
 
 def get_first_row(table_name):
     try:
@@ -41,8 +33,6 @@ def get_first_row(table_name):
         st.warning(f"Could not fetch data for table '{table_name}': {e}")
         return None
 
-tables = get_tables()
-
 if tables:
     st.header("Tables Found:")
     for table in tables:
@@ -53,4 +43,5 @@ if tables:
         else:
             st.info("Table is empty or data could not be fetched.")
 else:
-    st.info("No tables found in the 'public' schema or unable to connect.")
+    # This case should not be reached with hardcoded table names unless the list is empty
+    st.info("No tables specified.")
