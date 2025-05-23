@@ -1,1 +1,2 @@
-streamlitsupabase-py
+streamlit
+supabase-py
