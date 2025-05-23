@@ -6,7 +6,7 @@ import pandas as pd # Import pandas
 
 # Replace with your Supabase Project URL and anon key
 SUPABASE_URL = "https://oebhpvjeewmidbhcxuqn.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lYmhwdmplZXdtaWRiaGN4dXFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5NjY3NzMsImleHAiOjIwNjM1NDI3NzN9.LEPP0DLrmb0iYhyP6Nc-hWh1FHAGjvn0KG7mF1GJvnI"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lYmhwdmplZXdtaWRiaGN4dXFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5NjY3NzMsImV4cCI6MjA2MzU0Mjc3M30.LEPP0DLrmb0iYhyP6Nc-hWh1FHAGjvn0KG7mF1GJvnI"
 
 @st.cache_resource
 def init_supabase_client():
@@ -37,8 +37,8 @@ def get_first_row(table_name):
 def get_all_tenistas_ranked():
     try:
         # Fetch all rows from Tenistas table, ordered by points descending
-        # Assuming 'points' and 'country' are column names in your Tenistas table
-        response = supabase.from_('Tenistas').select('*').order('points', ascending=False).execute()
+        # Corrected the order method arguments
+        response = supabase.from_('Tenistas').select('*').order('points', 'desc').execute()
         return response.data
     except Exception as e:
         st.error(f"Error fetching Tenistas data: {e}")
